@@ -1,0 +1,33 @@
+{
+    "products": [
+        {
+            "sku": "12345678",
+            "name": "A5 Memo Bottle Portable Ultra Slim 420ML Water Bottle (Clear)",
+            "images": ["intro.mp4", "front.jpg", "side.jpg", "model.jpg"],
+            "product_type": "ME097SPAAJ3FYOANPH-38468541",
+            "description": "100% LEAKPROOF, FITS ANYWHERE",
+            "brand": "Memo",
+            "model": "A5 MEMO",
+            "warranty_period": "14 days",
+            "warranty_type": "Lazada refund warranty only",
+            "inside_box": "1 x A5 Memo Bottle Portable Ultra Slim 420ML Water Bottle (Clear)",           
+            "original_price": 200,
+            "seller_sku": "87654321"
+        }
+    ],
+    "sellers": [
+        {
+            "sku": "87654321",
+            "brand_logo": "logo.png",
+            "name": "TravGalore",
+            "seller_type": "Reseller",
+            "street": "8/F Pryce Center 1179 Don Chino Roces Avenue Corner Bagtikan Street 1286",
+            "city": "Makati City",
+            "state": "Metro Manila",
+            "zip_code": "1226",
+            "country": "Philippines",
+            "phone_number": "897-8141",
+            "website": "www.travgalore.com.ph"
+        }
+    ]
+}
