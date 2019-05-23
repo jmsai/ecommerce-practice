@@ -47,18 +47,21 @@ def product_page(sku):
     return json.dumps({"message": "No product found"}, indent=4)
 
 
+# Cart Routes
+@app.route('/cart/<customer_id>')
+def cart_page(customer_id):
+    with open('seed.json', 'r') as seed_file:
+        data = json.load(seed_file)
+        for cart in data["carts"]:
+            if cart["customer_id"] == customer_id:
+                return json.dumps(cart, indent=4)
+    return json.dumps({"message": "User does not exist"}, indent=4)
 
-@app.route('/cart')
-def cart_page():
-    return "This is my Cart"
 
-@app.route('/orders/<order_number>')
-def order_page():
-    return "This is an order page"
 
-@app.route('/products/<product_sku>')
-def product_page(product_sku):
-    return "This is product ID: %s" % product_sku
+# @app.route('/cart/item/<int:id>', methods=['DELETE'])
+# def delete_item_from_cart_button(id):
+#     pass
 
 @app.route('/sellers/<seller_sku>')
 def seller_page(seller_sku):
