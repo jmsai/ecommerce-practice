@@ -2,6 +2,34 @@ from flask import Flask, request
 import json
 app = Flask(__name__)
 
+
+# User Routes
+@app.route('/login')
+def login_page():
+    return "Login Page"
+
+@app.route('/login', methods=['POST'])
+def login_button():
+    request_data = request.get_json()
+    new_data = {
+        "email": request_data["email"],
+        "password": request_data["password"]
+    }
+    return json.dumps(new_data, indent=4)
+
+@app.route('/signup')
+def signup_page():
+    return "Signup Page"
+
+@app.route('/user/<id>')
+def profile_page(id):
+    with open('seed.json', 'r') as seed_file:
+        data = json.load(seed_file)
+        for user in data["users"]:
+            if user["id"] == id:
+                return json.dumps(user, indent=4)
+    return json.dumps({"message": "No user exist"})
+
 @app.route('/')
 def index_page():
     return "This is an indexpage"
