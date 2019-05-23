@@ -47,9 +47,6 @@ def product_page(sku):
     return json.dumps({"message": "No product found"}, indent=4)
 
 
-@app.route('/<user_id>')
-def profile_page(user_id):
-    return "This is a profile of customer with id: %s" % user_id
 
 @app.route('/cart')
 def cart_page():
