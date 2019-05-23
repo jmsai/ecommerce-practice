@@ -1,0 +1,131 @@
+{
+    "users": [
+        {
+            "id" : "12123434",
+            "email" : "michael.ho@gmail.com",
+            "password" : "riev9Zaiz1ie",
+            "name": {
+                "first_name" : "Michael",
+                "middle_name": "Sullivan",
+                "last_name" : "Ho"
+            },
+            "phone_number" : "09328595432",
+            "gender" : "Male",
+            "birth_date" : "10/5/1985",
+            "shipping_address": {
+                "street": "15 Shaw Blvd., Brgy. San Antonio,  N / A 1603",
+                "city": "Pasig City",
+                "state": "Metro Manila",
+                "zip_code": "1800",
+                "country": "Philippines"
+            },
+            "billing_address": {
+                "street": "15 Shaw Blvd., Brgy. San Antonio,  N / A 1603",
+                "city": "Pasig City",
+                "state": "Metro Manila",
+                "zip_code": "1800",
+                "country": "Philippines"                
+            }        
+        }
+    ],
+    "products": [
+        {
+            "sku": "12345678",
+            "name": "A5 Memo Bottle Portable Ultra Slim 420ML Water Bottle (Clear)",
+            "images": ["intro.mp4", "front.jpg", "side.jpg", "model.jpg"],
+            "product_type": "Water Bottles",
+            "description": "100% LEAKPROOF, FITS ANYWHERE",
+            "brand": "Memo",
+            "model": "A5 MEMO",
+            "warranty_period": "14 days",
+            "warranty_type": "Lazada refund warranty only",
+            "inside_box": "1 x A5 Memo Bottle Portable Ultra Slim 420ML Water Bottle (Clear)",           
+            "original_price": 200
+        },
+        {
+            "sku": "12123434",
+            "name": "Hand Bag Running Arm Band Leather Case For iphone Holder Pouch Belt GYM Cover",
+            "images": ["front.jpg", "advert.jpg"],
+            "product_type": "Phone Cases",
+            "description": "Durable case for long time use .",
+            "brand": "No Brand",
+            "model": "",
+            "warranty_period": "7 days",
+            "warranty_type": "Lazada refund warranty only",
+            "inside_box": "1 x Arm Band",           
+            "original_price": 99.99
+        },
+        {
+            "sku": "56789056",
+            "name": "FH Essentials Spa Massage Oil 100ml (Peppermint)",
+            "images": ["produt.jpg"],
+            "product_type": "Essential Oils",
+            "description": "gives a cooling sensation and has a calming effect on the body,",
+            "brand": "FH Essentials",
+            "model": "OILS007",
+            "warranty_period": "",
+            "warranty_type": "",
+            "inside_box": "1 x Item",           
+            "original_price": 499
+        }                
+    ],
+    "carts": [
+        {
+            "id": "9876543212",
+            "customer_id": "12123434",
+            "shipping_address": {
+                "street": "15 Shaw Blvd., Brgy. San Antonio,  N / A 1603",
+                "city": "Pasig City",
+                "state": "Metro Manila",
+                "zip_code": "1800",
+                "country": "Philippines"
+            },
+            "billing_address": {
+                "street": "15 Shaw Blvd., Brgy. San Antonio,  N / A 1603",
+                "city": "Pasig City",
+                "state": "Metro Manila",
+                "zip_code": "1800",
+                "country": "Philippines"                
+            },
+            "payment_method": "COD",
+            "tax_amoun": "0.00",
+            "shipping_fee": "50.00",
+            "discount_total": "0.00",
+            "payment_total": "299.00",
+            "items": [
+                "12345678", "12123434"
+            ]
+        }
+    ],    
+    "orders": [
+        {
+            "order_number": "87654321",
+            "tracking_id": "098765432188",
+            "transaction_date": "43605",
+            "delivery_time": "43609",
+            "customer_id": "12123434",
+            "shipping_address": {
+                "street": "15 Shaw Blvd., Brgy. San Antonio,  N / A 1603",
+                "city": "Pasig City",
+                "state": "Metro Manila",
+                "zip_code": "1800",
+                "country": "Philippines"
+            },
+            "billing_address": {
+                "street": "15 Shaw Blvd., Brgy. San Antonio,  N / A 1603",
+                "city": "Pasig City",
+                "state": "Metro Manila",
+                "zip_code": "1800",
+                "country": "Philippines"                
+            },
+            "payment_method": "COD",
+            "tax_amoun": "0.00",
+            "shipping_fee": "50.00",
+            "discount_total": "0.00",
+            "payment_total": "299.00",
+            "items": [
+                "12345678", "12123434"
+            ]
+        }
+    ]
+}
