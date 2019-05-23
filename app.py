@@ -32,7 +32,20 @@ def profile_page(id):
 
 @app.route('/')
 def index_page():
-    return "This is an indexpage"
+    with open('seed.json', "r") as seed_file:
+        data = json.load(seed_file)
+    return json.dumps(data['products'], indent=4)
+
+#Product Route
+@app.route('/product/<sku>')
+def product_page(sku):
+    with open('seed.json', 'r') as seed_file:
+        data = json.load(seed_file)
+        for product in data["products"]:
+            if product["sku"] == sku:
+                return json.dumps(product, indent=4)
+    return json.dumps({"message": "No product found"}, indent=4)
+
 
 @app.route('/<user_id>')
 def profile_page(user_id):
