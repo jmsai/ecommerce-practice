@@ -64,6 +64,22 @@ def cart_page(customer_id):
 #     pass
 
 
+# Order Routes
+@app.route('/orders')
+def orders_page():
+    with open('seed.json', 'r') as seed_file:
+        data = json.load(seed_file)
+    return json.dumps(data["orders"], indent=4)
+
+@app.route('/order/<order_number>')
+def order_page(order_number):
+    with open('seed.json', "r") as seed_file:
+        data = json.load(seed_file)
+        for order in data["orders"]:
+            if order["order_number"] == order_number:
+                return json.dumps(order, indent=4)
+    return json.dumps({"message": "No order found"}, indent=4)
+
 @app.errorhandler(404)
 def page_not_found(e):
     return "Error 404: Page not found!"
