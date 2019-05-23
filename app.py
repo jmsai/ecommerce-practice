@@ -80,9 +80,12 @@ def order_page(order_number):
                 return json.dumps(order, indent=4)
     return json.dumps({"message": "No order found"}, indent=4)
 
+
+# Error Page Route
 @app.errorhandler(404)
 def page_not_found(e):
     return "Error 404: Page not found!"
 
 if __name__ == '__main__':
     app.run()
+app.run(port=3000)
