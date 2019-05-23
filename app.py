@@ -63,9 +63,6 @@ def cart_page(customer_id):
 # def delete_item_from_cart_button(id):
 #     pass
 
-@app.route('/sellers/<seller_sku>')
-def seller_page(seller_sku):
-    return "This is seller ID: %s" % seller_sku
 
 @app.errorhandler(404)
 def page_not_found(e):
