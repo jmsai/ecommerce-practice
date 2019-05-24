@@ -52,11 +52,17 @@ def cart_page(customer_id):
     return json.dumps({"message": "User does not exist"}, indent=4)
 
 
+@app.route('/cart/<customer_id>', methods=['POST'])
+def add_to_cart_button(item):
+    pass
 
-# @app.route('/cart/item/<int:id>', methods=['DELETE'])
-# def delete_item_from_cart_button(id):
-#     pass
+@app.route('/cart/<customer_id>', methods=['PUT'])
+def update_item_from_cart_button(id):
+    pass
 
+@app.route('/cart/<customer_id>', methods=['DELETE'])
+def delete_item_from_cart_button(id):
+    pass
 
 # Order Routes
 @app.route('/orders/<customer_id>')
