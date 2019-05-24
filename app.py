@@ -6,6 +6,8 @@ sys.path.append(path.join(path.dirname(__file__), '..'))
 
 import controller.Product as ProductController
 import controller.Customer as CustomerController
+import controller.Cart as CartController
+import controller.Order as OrderController
 
 app = Flask(__name__)
 
