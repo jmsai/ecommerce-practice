@@ -2,10 +2,11 @@ import json
 from os import path
 import sys
 sys.path.append(path.join(path.dirname(__file__), '..'))
+
 from helper.Helper import generate_id
 
 class Cart:
-    def __init__(self, items, payment_total, customer_id):
+    def __init__(self, items='', payment_total='', customer_id=''):
         self.cart_id = generate_id()
         self.items = items
         self.payment_total = payment_total
