@@ -4,13 +4,13 @@ from os import path
 import sys
 sys.path.append(path.join(path.dirname(__file__), '..'))
 
-from helper.Helper import convert_to_json, generate_sku
+from helper.Helper import convert_to_json, generate_id
 
 class Product:
     def __init__(self, name='', product_type='', original_price='', discount_rate='', 
                  images=None, inside_box='', description='', brand='', 
                  model='', warranty_period='', warranty_type=''):
-        self.product_id = generate_sku()
+        self.product_id = generate_id()
         self.name = name
         self.description = description
         self.product_type = product_type
