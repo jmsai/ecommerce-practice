@@ -30,12 +30,11 @@ def signup_button():
 def profile_page(customer_id):
     return CustomerController.show_customer_profile(customer_id)
 
-# Index Route
+# Product Routes
 @app.route('/')
 def index_page():
     return ProductController.show_all_products()
 
-# Product Route
 @app.route('/products/<product_id>')
 def product_page(product_id):
     return ProductController.show_product_details(product_id)
