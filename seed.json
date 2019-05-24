@@ -1,7 +1,7 @@
 {
-    "users": [
+    "customers": [
         {
-            "id" : "12123434",
+            "customer_id" : "12123434",
             "email" : "michael.ho@gmail.com",
             "password" : "riev9Zaiz1ie",
             "name": {
