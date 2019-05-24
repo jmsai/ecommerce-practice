@@ -3,14 +3,14 @@ import uuid
 from os import path
 import sys
 sys.path.append(path.join(path.dirname(__file__), '..'))
-from helper.Helper import convert_to_json, generate_sku, generate_tracking_number
+from helper.Helper import convert_to_json, generate_id, generate_tracking_number
 
 class Order:
-    def __init__(self, delivery_date, delivery_status, shipping_fee, 
-                 shipping_address, billing_address, transaction_date, 
-                 payment_status, payment_method, payment_total, tax_amount, 
-                 discount_total, items, customer_id):
-        self.order_id = generate_sku()
+    def __init__(self, delivery_date='', delivery_status='', shipping_fee='', 
+                 shipping_address='', billing_address='', transaction_date='', 
+                 payment_status='', payment_method='', payment_total='', tax_amount='', 
+                 discount_total='', items='', customer_id=''):
+        self.order_id = generate_id()
         self.tracking_id = generate_tracking_number()
         self.delivery_date = delivery_date
         self.delivery_status = delivery_status
