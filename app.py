@@ -4,22 +4,34 @@ app = Flask(__name__)
 
 
 # User Routes
-@app.route('/login')
-def login_page():
-    return "Login Page"
-
-@app.route('/login', methods=['POST'])
+@app.route('/login', methods=['POST', 'GET'])
 def login_button():
-    request_data = request.get_json()
-    new_data = {
-        "email": request_data["email"],
-        "password": request_data["password"]
-    }
-    return json.dumps(new_data, indent=4)
+    if request.method == 'POST':
+        request_data = request.get_json()
+        new_data = {
+            "email": request_data["email"],
+            "password": request_data["password"]
+        }
+        return json.dumps(new_data, indent=4)
+    else:
+        return "Login Page"
 
-@app.route('/signup')
-def signup_page():
-    return "Signup Page"
+@app.route('/signup', methods=['POST', 'GET'])
+def signup_button():
+    if request.method == 'POST':
+        request_data = request.get_json()
+        new_data = {
+            "email": request_data["email"],
+            "password": request_data["password"],
+            "name": {
+                "first_name": request_data["first_name"],
+                "middle_name": request_data["middle_name"],
+                "last_name": request_data["last_name"]
+            }
+        }
+        return json.dumps(new_data, indent=4)
+    else:
+        return "Signup Page"
 
 @app.route('/user/<id>')
 def profile_page(id):
