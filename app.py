@@ -59,20 +59,30 @@ def cart_page(customer_id):
 
 
 # Order Routes
-@app.route('/orders')
-def orders_page():
-    with open('seed.json', 'r') as seed_file:
-        data = json.load(seed_file)
-    return json.dumps(data["orders"], indent=4)
+@app.route('/orders/<customer_id>')
+def orders_page(customer_id):
+    return OrderController.show_all_orders(customer_id)
 
-@app.route('/order/<order_number>')
-def order_page(order_number):
-    with open('seed.json', "r") as seed_file:
-        data = json.load(seed_file)
-        for order in data["orders"]:
-            if order["order_number"] == order_number:
-                return json.dumps(order, indent=4)
-    return json.dumps({"message": "No order found"}, indent=4)
+@app.route('/orders/<customer_id>', methods=['POST'])
+def checkout_cart_button(cart):
+    pass
+
+@app.route('/orders/<customer_id>', methods=['PUT'])
+def confirm_payment_button(cart_id):
+    pass
+
+@app.route('/order/<customer_id>')
+def order_page(customer_id):
+    order_id = request.args.get('id')
+    return OrderController.show_order(customer_id, order_id)
+
+@app.route('/order/<customer_id>?order_id=<order_number>', methods=['PUT'])
+def change_shipment_status(order_number):
+    pass
+
+@app.route('/order/<customer_id>?order_id=<order_number>', methods=['DELETE'])
+def cancel_shipment(order_number):
+    pass
 
 
 # Error Page Route
