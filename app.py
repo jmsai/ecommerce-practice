@@ -1,18 +1,20 @@
 from flask import Flask, request
 import json
-app = Flask(__name__)
+from os import path
+import sys
+sys.path.append(path.join(path.dirname(__file__), '..'))
 
+import controller.Product as ProductController
+import controller.Customer as CustomerController
+
+app = Flask(__name__)
 
 # User Routes
 @app.route('/login', methods=['POST', 'GET'])
 def login_button():
     if request.method == 'POST':
         request_data = request.get_json()
-        new_data = {
-            "email": request_data["email"],
-            "password": request_data["password"]
-        }
-        return json.dumps(new_data, indent=4)
+        return CustomerController.login_customer(request_data)
     else:
         return "Login Page"
 
@@ -20,44 +22,23 @@ def login_button():
 def signup_button():
     if request.method == 'POST':
         request_data = request.get_json()
-        new_data = {
-            "email": request_data["email"],
-            "password": request_data["password"],
-            "name": {
-                "first_name": request_data["first_name"],
-                "middle_name": request_data["middle_name"],
-                "last_name": request_data["last_name"]
-            }
-        }
-        return json.dumps(new_data, indent=4)
+        return CustomerController.signup_customer(request_data)
     else:
         return "Signup Page"
 
-@app.route('/user/<id>')
-def profile_page(id):
-    with open('seed.json', 'r') as seed_file:
-        data = json.load(seed_file)
-        for user in data["users"]:
-            if user["id"] == id:
-                return json.dumps(user, indent=4)
-    return json.dumps({"message": "No user exist"})
+@app.route('/customers/<customer_id>')
+def profile_page(customer_id):
+    return CustomerController.show_customer_profile(customer_id)
 
+# Index Route
 @app.route('/')
 def index_page():
-    with open('seed.json', "r") as seed_file:
-        data = json.load(seed_file)
-    return json.dumps(data['products'], indent=4)
+    return ProductController.show_all_products()
 
-#Product Route
-@app.route('/product/<sku>')
-def product_page(sku):
-    with open('seed.json', 'r') as seed_file:
-        data = json.load(seed_file)
-        for product in data["products"]:
-            if product["sku"] == sku:
-                return json.dumps(product, indent=4)
-    return json.dumps({"message": "No product found"}, indent=4)
-
+# Product Route
+@app.route('/products/<product_id>')
+def product_page(product_id):
+    return ProductController.show_product_details(product_id)
 
 # Cart Routes
 @app.route('/cart/<customer_id>')
@@ -100,4 +81,5 @@ def page_not_found(e):
 
 if __name__ == '__main__':
     app.run()
+
 app.run(port=3000)
