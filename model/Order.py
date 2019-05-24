@@ -25,3 +25,22 @@ class Order:
         self.payment_total = payment_total
         self.items = items
         self.customer_id = customer_id
+
+    def find_all_orders(self):
+        with open('seed.json', 'r') as seed_file:
+            data = json.load(seed_file)
+            return data["orders"]
+
+    def find_orders_by_customer(self, customer_id):
+        orders = self.find_all_orders()
+        for customer_orders in orders:
+            if customer_orders["customer_id"] == customer_id:
+                return customer_orders
+        return { "message": "Customer does not exist" }
+    
+    def find_order_by_id(self, customer_id, order_id):
+        customer_orders = self.find_orders_by_customer(customer_id)
+        for order in customer_orders:
+            if order["order_id"] == order_id:
+                return order
+        return { "message": "Order does not exist" }
