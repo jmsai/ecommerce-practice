@@ -6,10 +6,10 @@ sys.path.append(path.join(path.dirname(__file__), '..'))
 from helper.Helper import convert_to_json, generate_id
 
 class Customer:
-    def __init__(self, email='', password='', first_name='', 
+    def __init__(self, _id='', email='', password='', first_name='', 
                  last_name='', middle_name='', phone_number='', gender='', 
                  birth_date='', billing_address='', shipping_address=''):
-        self.customer_id = generate_id(),
+        self.customer_id = _id,
         self.email = email,
         self.password = password
         self.first_name = first_name
@@ -38,12 +38,8 @@ class Customer:
 
     def find_user_by_id(self, customer_id):
         customers = self.find_all_users()
-        for customer in customers:
-            if customer["customer_id"] == customer_id:
-                return convert_to_json(customer)
-        return convert_to_json(
-            { "message": "No customer exist" }
-        )        
+        customer = next(filter(lambda data: data['customer_id'] == customer_id, customers), None)
+        return customer    
 
     def find_user_by_email(self, customer_email):
         customers = self.find_all_users()

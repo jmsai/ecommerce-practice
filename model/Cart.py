@@ -6,8 +6,8 @@ sys.path.append(path.join(path.dirname(__file__), '..'))
 from helper.Helper import generate_id
 
 class Cart:
-    def __init__(self, items='', payment_total='', customer_id=''):
-        self.cart_id = generate_id()
+    def __init__(self, customer_id='', items='', payment_total=''):
+        self.customer_id = customer_id
         self.items = items
         self.payment_total = payment_total
         self.customer_id = customer_id
@@ -19,7 +19,12 @@ class Cart:
 
     def find_cart_by_customer_id(self, customer_id):
         carts = self.find_all_carts()
-        for cart in carts:
-            if cart["customer_id"] == customer_id:
-                return cart
-        return { "message": "User does not exist" }
+        cart = next(filter(lambda data: data['customer_id'] == customer_id, carts), None)
+        return cart
+
+    def add_item_to_cart(self, customer_id, request_data):
+        cart = self.find_cart_by_customer_id(customer_id)
+        return cart['items']
+
+    def edit_item_from_cart(self, customer_id, request_data):
+        pass

@@ -85,15 +85,45 @@
     ],
     "carts": [
         {
-            "cart_id": "9876543212",
+            "customer_id": "12123434",
             "items": [
                 "12345678", "12123434"
             ],
-            "payment_total": "299.00",
-            "customer_id": "12123434"
+            "payment_total": "299.00"
         }
     ],    
     "orders": [
+        {
+            "order_id": "92454321",
+            "tracking_id": "098765432188",
+            "delivery_date": "2019-05-24 08:58:39.854555",
+            "delivery_status": "delivered",
+            "shipping_address": {
+                "street": "15 Shaw Blvd., Brgy. San Antonio,  N / A 1603",
+                "city": "Pasig City",
+                "state": "Metro Manila",
+                "zip_code": "1800",
+                "country": "Philippines"
+            },
+            "billing_address": {
+                "street": "15 Shaw Blvd., Brgy. San Antonio,  N / A 1603",
+                "city": "Pasig City",
+                "state": "Metro Manila",
+                "zip_code": "1800",
+                "country": "Philippines"                
+            },
+            "transaction_date": "2019-05-22 08:58:39.854555",
+            "payment_status": "paid",
+            "payment_method": "COD",
+            "tax_amoun": "0.00",
+            "shipping_fee": "50.00",
+            "discount_total": "0.00",
+            "payment_total": "299.00",
+            "items": [
+                "12345678", "12123434"
+            ],
+            "customer_id": "12123434"
+        },        
         {
             "order_id": "87654321",
             "tracking_id": "098765432188",

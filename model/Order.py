@@ -33,14 +33,25 @@ class Order:
 
     def find_orders_by_customer(self, customer_id):
         orders = self.find_all_orders()
-        for customer_orders in orders:
-            if customer_orders["customer_id"] == customer_id:
-                return customer_orders
-        return { "message": "Customer does not exist" }
+        customer_orders = list(filter(lambda data: data['customer_id'] == customer_id, orders))
+        return customer_orders
     
-    def find_order_by_id(self, customer_id, order_id):
+    def search_order_by_id(self, customer_id, order_id):
         customer_orders = self.find_orders_by_customer(customer_id)
-        for order in customer_orders:
-            if order["order_id"] == order_id:
-                return order
-        return { "message": "Order does not exist" }
+        order = next(filter(lambda data: data['order_id'] == order_id, customer_orders), None)
+        return order    
+
+    def add_order(self, customer_id, request_data):
+        customer = self.find_orders_by_customer(customer_id)
+        customer.append(request_data)
+        return customer
+
+    def edit_order(self, order_id, request_data):
+        orders = list(self.find_all_orders())
+        order = next(filter(lambda data: data['order_id'] == order_id, orders), None)
+        
+        if order is None:
+            orders.append(request_data)
+        else:
+            order.update(request_data)
+        return orders

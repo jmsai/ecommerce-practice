@@ -4,13 +4,13 @@ from os import path
 import sys
 sys.path.append(path.join(path.dirname(__file__), '..'))
 
-from helper.Helper import convert_to_json, generate_id
+# from helper.Helper import convert_to_json, generate_id
 
 class Product:
-    def __init__(self, name='', product_type='', original_price='', discount_rate='', 
+    def __init__(self, _id='', name='', product_type='', original_price='', discount_rate='', 
                  images=None, inside_box='', description='', brand='', 
                  model='', warranty_period='', warranty_type=''):
-        self.product_id = generate_id()
+        self.product_id = _id
         self.name = name
         self.description = description
         self.product_type = product_type
@@ -31,9 +31,7 @@ class Product:
             data = json.load(seed_file)
             return data["products"]
 
-    def find_product_by_id(self, product_id):
+    def find_product_by_id(self, _id):
         products = self.find_all_products()
-        for product in products:
-            if product["product_id"] == product_id:
-                return product
-        return { "message": "No product found" }
+        product = next(filter(lambda data: data['product_id'] == _id, products), None)
+        return product

@@ -1,16 +1,19 @@
 from os import path
 import sys
 sys.path.append(path.join(path.dirname(__file__), '..'))
+from flask_restful import Resource
 
 from model.Product import Product
 import view.Product as view
 
 model = Product()
 
-def show_all_products():
-    products = model.find_all_products()
-    return view.index_response(products)
+class ProductListController(Resource):
+    def get(self):
+        products = model.find_all_products()
+        return products, 200 if products else 404
 
-def show_product_details(product_id):
-    product = model.find_product_by_id(product_id)
-    return view.product_response(product)
+class ProductController(Resource):
+    def get(self, _id):
+        product = model.find_product_by_id(_id)
+        return product, 200 if product else 404

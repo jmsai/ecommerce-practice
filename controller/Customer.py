@@ -1,18 +1,23 @@
 from os import path
 import sys
 sys.path.append(path.join(path.dirname(__file__), '..'))
+from flask import request
+from flask_restful import Resource
 
 from model.Customer import Customer
 import view.Customer as view
 
 model = Customer()
 
-def signup_customer(request_data):
-    return view.signup_response(request_data)
+class CustomerController(Resource):
+    def get(self, customer_id):
+        customer = model.find_user_by_id(customer_id)
+        return customer, 200 if customer else 404
 
-def login_customer(request_data):
-    return view.login_response(request_data)
+class SignupController(Resource):
+    def post(self):
+        return request.get_json()
 
-def show_customer_profile(customer_id):
-    customer = model.find_user_by_id(customer_id)
-    return view.profile_response(customer)
+class LoginController(Resource):
+    def post(self):
+        return request.get_json()
