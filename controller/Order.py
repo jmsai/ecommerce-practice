@@ -13,10 +13,16 @@ class OrderListController(Resource):
         order_id = request.args.get('order_id')
         if order_id is None:
             orders = model.find_orders_by_customer(customer_id)
-            return orders, 200 if orders else 404
+            if not orders:
+                return { "message": "No customer found" }, 404
+            else:
+                return orders, 200
         else:
             order = model.search_order_by_id(customer_id, order_id)
-            return order, 200 if order else 404
+            if order is None:
+                return { "message": "Order Number not found" }, 404
+            else:
+                return order, 200
 
     def post(self, customer_id):
         request_data = request.json()
