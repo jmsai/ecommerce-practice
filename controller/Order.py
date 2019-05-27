@@ -24,12 +24,15 @@ class OrderListController(Resource):
         if customer is None:
             return { "message": "Failed to add order" }, 400
         else:
-            return request_data
+            return request_data, 201
 
-class OrderController(Resource):
+class OrderController(Resource): 
     def get(self, order_id):
-        order = model.find_order_by_id(customer_id, order_id)
-        return order, 200 if order else 404
+        order = model.find_order_by_id(order_id)
+        if order is None:
+            return {"message": "Order number not found"}, 404
+        else:
+            return order, 200
 
     def put(self, order_id):
         request_data = request.json()

@@ -5,7 +5,7 @@ from os import path
 import sys
 sys.path.append(path.join(path.dirname(__file__), '..'))
 
-from  controller.Product import ProductController, ProductListController
+from controller.Product import ProductController, ProductListController
 from controller.Customer import CustomerController, SignupController, LoginController
 from controller.Cart import CartController
 from controller.Order import OrderController, OrderListController

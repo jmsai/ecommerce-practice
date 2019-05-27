@@ -41,15 +41,19 @@ class Order:
         order = next(filter(lambda data: data['order_id'] == order_id, customer_orders), None)
         return order    
 
+    def find_order_by_id(self, order_id):
+        orders = self.find_all_orders()
+        order = next(filter(lambda data: data['order_id'] == order_id, orders), None)
+        return order           
+
     def add_order(self, customer_id, request_data):
         customer = self.find_orders_by_customer(customer_id)
         customer.append(request_data)
         return customer
 
     def edit_order(self, order_id, request_data):
-        orders = list(self.find_all_orders())
+        orders = self.find_all_orders()
         order = next(filter(lambda data: data['order_id'] == order_id, orders), None)
-        
         if order is None:
             orders.append(request_data)
         else:
