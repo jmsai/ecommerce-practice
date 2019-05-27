@@ -87,7 +87,14 @@
         {
             "customer_id": "12123434",
             "items": [
-                "12345678", "12123434"
+                {
+                    "item_id": "12345678",
+                    "quantity": 1
+                }, 
+                {
+                    "item_id": "12123434",
+                    "quantity": 2
+                }
             ],
             "payment_total": "299.00"
         }
@@ -120,7 +127,14 @@
             "discount_total": "0.00",
             "payment_total": "299.00",
             "items": [
-                "12345678", "12123434"
+                {
+                    "item_id": "12345678",
+                    "quantity": 1
+                }, 
+                {
+                    "item_id": "12123434",
+                    "quantity": 2
+                }
             ],
             "customer_id": "12123434"
         },        
@@ -151,7 +165,10 @@
             "discount_total": "0.00",
             "payment_total": "299.00",
             "items": [
-                "12345678", "12123434"
+                {
+                    "item_id": "12345678",
+                    "quantity": 1
+                }
             ],
             "customer_id": "12123434"
         }
