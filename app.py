@@ -1,14 +1,16 @@
+from controller.Product import ProductController, ProductListController
+from controller.Customer import CustomerController, SignupController
+from controller.Customer import LoginController
+from controller.Cart import CartController
+from controller.Order import OrderController, OrderListController
+
 from flask import Flask, request
 from flask_restful import Resource, Api
 import json
 from os import path
 import sys
-sys.path.append(path.join(path.dirname(__file__), '..'))
 
-from controller.Product import ProductController, ProductListController
-from controller.Customer import CustomerController, SignupController, LoginController
-from controller.Cart import CartController
-from controller.Order import OrderController, OrderListController
+sys.path.append(path.join(path.dirname(__file__), '..'))
 
 app = Flask(__name__)
 api = Api(app)
@@ -28,6 +30,7 @@ api.add_resource(CartController, '/<customer_id>/cart')
 # Order Route
 api.add_resource(OrderListController, '/<customer_id>/orders')
 api.add_resource(OrderController, '/order/<order_id>')
+
 
 # Error Page Route
 @app.errorhandler(404)

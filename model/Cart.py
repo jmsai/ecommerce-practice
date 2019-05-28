@@ -1,9 +1,9 @@
 import json
 from os import path
 import sys
+
 sys.path.append(path.join(path.dirname(__file__), '..'))
 
-from helper.Helper import generate_id
 
 class Cart:
     def __init__(self, customer_id='', items='', payment_total=''):

@@ -2,8 +2,9 @@ import bcrypt
 import json
 from os import path
 import sys
+
 sys.path.append(path.join(path.dirname(__file__), '..'))
-from helper.Helper import convert_to_json, generate_id
+
 
 class Customer:
     def __init__(self, _id='', email='', password='', first_name='', 
@@ -39,14 +40,14 @@ class Customer:
     def find_user_by_id(self, customer_id):
         customers = self.find_all_users()
         customer = next(filter(lambda data: data['customer_id'] == customer_id, customers), None)
-        return customer    
+        return customer
 
     def find_user_by_email(self, customer_email):
         customers = self.find_all_users()
         for customer in customers:
             if customer["email"] == customer_email:
                 return True
-        return False 
+        return False
 
     def get_full_name(self):
         return ("%s %s" % (self.first_name, self.last_name))

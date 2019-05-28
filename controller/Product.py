@@ -1,12 +1,13 @@
+from model.Product import Product
+
 from os import path
 import sys
-sys.path.append(path.join(path.dirname(__file__), '..'))
 from flask import request
 from flask_restful import Resource
 
-from model.Product import Product
-
+sys.path.append(path.join(path.dirname(__file__), '..'))
 model = Product()
+
 
 class ProductListController(Resource):
     def get(self):
@@ -17,7 +18,7 @@ class ProductListController(Resource):
         else:
             product = model.find_product_by_id(product_id)
             if product is None:
-                return { "message": "Product not found" }, 404
+                return {"message": "Product not found"}, 404
             else:
                 return product, 200
 
@@ -26,6 +27,6 @@ class ProductController(Resource):
     def get(self, _id):
         product = model.find_product_by_id(_id)
         if product is None:
-            return { "message": "No product found" }, 404
+            return {"message": "No product found"}, 404
         else:
             return product, 200
