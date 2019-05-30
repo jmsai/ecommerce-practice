@@ -1,25 +1,28 @@
+from helper.Helper import filter_result, generate_id
+from helper.Helper import generate_tracking_number
+
 import json
 import uuid
+import datetime as Date
 from os import path
 import sys
 
 sys.path.append(path.join(path.dirname(__file__), '..'))
+orders = []
 
 
 class Order:
-    def __init__(self, order_id='', tracking_id='', delivery_date='',
-                 delivery_status='', shipping_fee='', shipping_address='',
-                 billing_address='', transaction_date='', payment_status='',
-                 payment_method='', payment_total='', tax_amount='',
-                 discount_total='', items='', customer_id=''):
-        self.order_id = order_id
-        self.tracking_id = tracking_id
+    def __init__(self, delivery_date='', shipping_fee='', shipping_address='',
+                 billing_address='', payment_method='', payment_total='',
+                 tax_amount='', discount_total='', items='', customer_id=''):
+        self.order_id = generate_id()
+        self.tracking_id = generate_tracking_number()
         self.delivery_date = delivery_date
-        self.delivery_status = delivery_status
+        self.delivery_status = "Pending"
         self.shipping_address = shipping_address
         self.billing_address = billing_address
-        self.transaction_date = transaction_date
-        self.payment_status = payment_status
+        self.transaction_date = Date.datetime.now()
+        self.payment_status = "Pending"
         self.payment_method = payment_method
         self.tax_amount = tax_amount
         self.shipping_fee = shipping_fee
@@ -29,33 +32,30 @@ class Order:
         self.customer_id = customer_id
 
     def find_all_orders(self):
-        with open('seed.json', 'r') as seed_file:
-            data = json.load(seed_file)
-            return data["orders"]
+        return orders
 
     def find_orders_by_customer(self, customer_id):
         orders = self.find_all_orders()
-        customer_orders = list(filter(lambda data: data['customer_id'] == customer_id, orders))
-        return customer_orders
+        customer_orders = filter_result('customer_id', customer_id, orders)
+        return list(customer_orders)
 
     def search_order_by_id(self, customer_id, order_id):
         customer_orders = self.find_orders_by_customer(customer_id)
-        order = next(filter(lambda data: data['order_id'] == order_id, customer_orders), None)
-        return order
+        order = filter_result('order_id', order_id, customer_orders)
+        return next(order, None)
 
     def find_order_by_id(self, order_id):
         orders = self.find_all_orders()
-        order = next(filter(lambda data: data['order_id'] == order_id, orders), None)
-        return order
+        order = filter_result('order_id', order_id, orders)
+        return next(order, None)
 
     def add_order(self, customer_id, request_data):
-        customer = self.find_orders_by_customer(customer_id)
-        customer.append(request_data)
-        return customer
+        orders = self.find_orders_by_customer(customer_id)
+        orders.append(request_data)
 
     def edit_order(self, order_id, request_data):
         orders = self.find_all_orders()
-        order = next(filter(lambda data: data['order_id'] == order_id, orders), None)
+        order = next(filter_result('order_id', order_id, orders), None)
         if order is None:
             orders.append(request_data)
         else:

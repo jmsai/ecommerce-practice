@@ -1,8 +1,11 @@
+from helper.Helper import filter_result, remove_data
+
 import json
 from os import path
 import sys
 
 sys.path.append(path.join(path.dirname(__file__), '..'))
+carts = []
 
 
 class Cart:
@@ -11,15 +14,16 @@ class Cart:
         self.items = items
         self.payment_total = payment_total
 
+    def create_cart_for_user(self, new_cart):
+        carts.append(new_cart)
+
     def find_all_carts(self):
-        with open('seed.json', 'r') as seed_file:
-            data = json.load(seed_file)
-            return data["carts"]
+        return carts
 
     def find_cart_by_customer_id(self, customer_id):
         carts = self.find_all_carts()
-        cart = next(filter(lambda data: data['customer_id'] == customer_id, carts), None)
-        return cart
+        cart = filter_result('customer_id', customer_id, carts)
+        return next(cart, None)
 
     def add_item_to_cart(self, customer_id, request_data):
         cart = self.find_cart_by_customer_id(customer_id)
@@ -31,12 +35,18 @@ class Cart:
         items.append(request_data)
         return cart
 
-    def edit_item_from_cart(self, customer_id, request_data):
+    def edit_item_from_cart(self, customer_id, item_id, data):
         cart = self.find_cart_by_customer_id(customer_id)
         items = cart['items']
-        item = next(filter(lambda data: data['item_id'] == request_data['item_id'], items), None)
-        if item is None:
-            items.append(request_data)
-        else:
-            item.update(request_data)
-        return items
+        item = next(filter_result('item_id', item_id, items), None)
+        if item is not None:
+            item['quantity'] += data['quantity']
+        return cart
+
+    def remove_item_from_cart(self, customer_id, item_id):
+        cart = self.find_cart_by_customer_id(customer_id)
+        items = cart['items']
+        item = next(remove_data('item_id', item_id, items), None) 
+        if item is not None:
+            items.remove(item)
+        return cart

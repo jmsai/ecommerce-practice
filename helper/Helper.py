@@ -1,9 +1,12 @@
-import json
 import uuid
 
 
-def convert_to_json(obj):
-    return json.dumps(obj, indent=4, sort_keys=False)
+def filter_result(data_key, to_find, table):
+    return filter(lambda data: data[data_key] == to_find, table)
+
+
+def remove_data(data_key, to_find, table):
+    return filter(lambda data: data[data_key] != to_find, table)
 
 
 def generate_id():

@@ -1,3 +1,5 @@
+from helper.Helper import filter_result
+
 import json
 import uuid
 from os import path
@@ -24,9 +26,6 @@ class Product:
         self.original_price = original_price
         self.discount_rate = discount_rate
 
-    def get_discount_price(self):
-        return self.original_price - (self.original_price * (self.discount_rate / 100))
-
     def find_all_products(self):
         with open("seed.json", "r") as seed_file:
             data = json.load(seed_file)
@@ -34,5 +33,5 @@ class Product:
 
     def find_product_by_id(self, _id):
         products = self.find_all_products()
-        product = next(filter(lambda data: data['product_id'] == _id, products), None)
-        return product
+        product = filter_result('product_id', _id, products)
+        return next(product, None)

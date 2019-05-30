@@ -26,12 +26,15 @@ class OrderListController(Resource):
                 return order, 200
 
     def post(self, customer_id):
-        request_data = request.json()
-        customer = model.add_order(customer_id, request_data)
+        data = request.json()
+        customer = model.find_order_by_id(customer_id)
+
         if customer is None:
             return {"message": "Failed to add order"}, 400
         else:
-            return request_data, 201
+            new_order = Order(data).__dict__
+            model.add_order(customer_id, new_order)
+            return new_order, 201
 
 
 class OrderController(Resource):
@@ -48,7 +51,4 @@ class OrderController(Resource):
         if order is None:
             return {"message": "Failed to edit order"}, 400
         else:
-            return request_data
-
-    def delete(self, order_id):
-        return {"message": "Order has been cancelled"}
+            return order, 200

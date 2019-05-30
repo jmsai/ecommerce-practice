@@ -1,7 +1,7 @@
 from controller.Product import ProductController, ProductListController
 from controller.Customer import CustomerController, SignupController
 from controller.Customer import LoginController
-from controller.Cart import CartController
+from controller.Cart import CartController, ItemController
 from controller.Order import OrderController, OrderListController
 
 from flask import Flask, request
@@ -18,18 +18,20 @@ api = Api(app)
 # User Routes
 api.add_resource(SignupController, '/signup')
 api.add_resource(LoginController, '/login')
-api.add_resource(CustomerController, '/<customer_id>')
+api.add_resource(CustomerController, '/customers/<customer_id>')
 
 # Product Routes
 api.add_resource(ProductListController, '/')
-api.add_resource(ProductController, '/product/<_id>')
+api.add_resource(ProductController, '/products/<product_id>')
 
 # Cart Route
-api.add_resource(CartController, '/<customer_id>/cart')
+api.add_resource(CartController, '/customers/<customer_id>/cart/items')
+api.add_resource(ItemController,
+                 '/customers/<customer_id>/cart/items/<item_id>')
 
 # Order Route
-api.add_resource(OrderListController, '/<customer_id>/orders')
-api.add_resource(OrderController, '/order/<order_id>')
+api.add_resource(OrderListController, '/customers/<customer_id>/orders')
+api.add_resource(OrderController, '/customers/<customer_id>/orders/<order_id>')
 
 
 # Error Page Route
