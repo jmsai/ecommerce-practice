@@ -30,7 +30,7 @@ class CartController(Resource):
 
     def put(self, customer_id):
         data = request.get_json()
-        cart = model.add_item_to_cart(customer_id, data) 
+        cart = model.add_item_to_cart(customer_id, data)
         if cart is None:
             return {"message": "Failed to add item to cart"}, 400
         else:

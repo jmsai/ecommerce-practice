@@ -11,12 +11,13 @@ model = Product()
 
 class ProductListController(Resource):
     def get(self):
-        product_id = request.args.get('id')
-        if product_id is None:
+        product_name = request.args.get('name')
+        if product_name is None:
             products = model.find_all_products()
             return products, 200
         else:
-            product = model.find_product_by_id(product_id)
+            product = model.find_product_by_name(product_name)
+            print(product)
             if product is None:
                 return {"message": "No results found"}, 404
             else:

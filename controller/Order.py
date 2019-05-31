@@ -26,28 +26,40 @@ class OrderListController(Resource):
                 return order, 200
 
     def post(self, customer_id):
-        data = request.json()
+        data = request.get_json()
         customer = model.find_order_by_id(customer_id)
-
+        print(customer)
         if customer is None:
-            return {"message": "Failed to add order"}, 400
-        else:
-            new_order = Order(data).__dict__
-            model.add_order(customer_id, new_order)
+            new_order = Order(
+                                data.get('delivery_date'),
+                                data.get('shipping_address'),
+                                data.get('billing_address'),
+                                data.get('payment_method'),
+                                data.get('tax_amount'),
+                                data.get('shipping_fee'),
+                                data.get('discount_total'),
+                                data.get('payment_total'),
+                                data.get('items'),
+                                customer_id
+                            ).__dict__
+            model.add_order(new_order)
             return new_order, 201
+        else:
+            return {"message": "Failed to add order"}, 400
 
 
 class OrderController(Resource):
-    def get(self, order_id):
+    def get(self, customer_id, order_id):
         order = model.find_order_by_id(order_id)
         if order is None:
             return {"message": "Order number not found"}, 404
         else:
             return order, 200
 
-    def put(self, order_id):
-        request_data = request.json()
-        order = model.edit_order(order_id, request_data)
+    def put(self, customer_id, order_id):
+        data = request.get_json()
+        order = model.edit_order(customer_id, order_id, data)
+        print(order)
         if order is None:
             return {"message": "Failed to edit order"}, 400
         else:
