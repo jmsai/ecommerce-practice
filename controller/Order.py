@@ -12,14 +12,18 @@ model = Order()
 class OrderListController(Resource):
     def get(self, customer_id):
         order_id = request.args.get('order_id')
+
         if order_id is None:
             orders = model.find_orders_by_customer(customer_id)
+
             if not orders:
                 return {"message": "No customer found"}, 404
             else:
                 return orders, 200
+
         else:
             order = model.search_order_by_id(customer_id, order_id)
+
             if order is None:
                 return {"message": "Order Number not found"}, 404
             else:
@@ -28,7 +32,7 @@ class OrderListController(Resource):
     def post(self, customer_id):
         data = request.get_json()
         customer = model.find_order_by_id(customer_id)
-        print(customer)
+
         if customer is None:
             new_order = Order(
                                 data.get('delivery_date'),
@@ -51,6 +55,7 @@ class OrderListController(Resource):
 class OrderController(Resource):
     def get(self, customer_id, order_id):
         order = model.find_order_by_id(order_id)
+
         if order is None:
             return {"message": "Order number not found"}, 404
         else:
@@ -59,8 +64,10 @@ class OrderController(Resource):
     def put(self, customer_id, order_id):
         data = request.get_json()
         order = model.edit_order(customer_id, order_id, data)
-        print(order)
+
         if order is None:
             return {"message": "Failed to edit order"}, 400
+        elif not order:
+            return {"message": "Customer not found"}, 404
         else:
             return order, 200

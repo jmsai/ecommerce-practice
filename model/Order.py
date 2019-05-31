@@ -55,9 +55,11 @@ class Order:
 
     def edit_order(self, customer_id, order_id, data):
         orders = self.find_orders_by_customer(customer_id)
+        if not orders:
+            return orders
         order = next(filter_result('order_id', order_id, orders), None)
         if order is None:
-            orders.append(data)
+            return order
         else:
             order.update(data)
         return orders
