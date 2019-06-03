@@ -16,22 +16,29 @@ app = Flask(__name__)
 api = Api(app)
 
 # User Routes
-api.add_resource(SignupController, '/api/v1/signup')
-api.add_resource(LoginController, '/api/v1/login')
-api.add_resource(CustomerController, '/api/v1/customers/<customer_id>')
+api.add_resource(SignupController,
+                 '/api/v1/signup')
+api.add_resource(LoginController,
+                 '/api/v1/login')
+api.add_resource(CustomerController,
+                 '/api/v1/customers/<customer_id>')
 
 # Product Routes
-api.add_resource(ProductListController, '/api/v1/')
-api.add_resource(ProductController, '/api/v1/products/<product_id>')
+api.add_resource(ProductListController,
+                 '/api/v1/')
+api.add_resource(ProductController,
+                 '/api/v1/products/<product_id>')
 
 # Cart Route
-api.add_resource(CartController, '/api/v1/customers/<customer_id>/cart/items')
+api.add_resource(CartController,
+                 '/api/v1/customers/<customer_id>/cart/items')
 api.add_resource(ItemController,
                  '/api/v1/customers/<customer_id>/cart/items/<item_id>')
 
 # Order Route
-api.add_resource(OrderListController, '/api/v1/customers/<customer_id>/orders')
-api.add_resource(OrderController, 
+api.add_resource(OrderListController,
+                 '/api/v1/customers/<customer_id>/orders')
+api.add_resource(OrderController,
                  '/api/v1/customers/<customer_id>/orders/<order_id>')
 
 

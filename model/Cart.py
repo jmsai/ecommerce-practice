@@ -46,7 +46,7 @@ class Cart:
     def remove_item_from_cart(self, customer_id, item_id):
         cart = self.find_cart_by_customer_id(customer_id)
         items = cart['items']
-        item = next(remove_data('item_id', item_id, items), None) 
+        item = next(remove_data('item_id', item_id, items), None)
         if item is not None:
             items.remove(item)
         return cart
