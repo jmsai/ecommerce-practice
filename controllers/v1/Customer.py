@@ -1,4 +1,4 @@
-from model.Customer import Customer
+from models.v1.Customer import Customer
 
 from os import path
 import sys
@@ -9,7 +9,7 @@ sys.path.append(path.join(path.dirname(__file__), '..'))
 model = Customer()
 
 
-class CustomerController(Resource):
+class CustomerController_v1(Resource):
     def get(self, customer_id):
         customer = model.find_user_by_id(customer_id)
         if customer is None:
@@ -18,7 +18,7 @@ class CustomerController(Resource):
             return customer, 200
 
 
-class SignupController(Resource):
+class SignupController_v1(Resource):
     def post(self):
         data = request.get_json()
         customer = model.find_user_by_email(data.get('email'))
@@ -36,7 +36,7 @@ class SignupController(Resource):
             return {"message": "User already exists"}, 400
 
 
-class LoginController(Resource):
+class LoginController_v1(Resource):
     def post(self):
         data = request.get_json()
         customer = model.find_user_by_email(data.get('email'))

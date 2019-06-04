@@ -1,4 +1,4 @@
-from model.Order import Order
+from models.v1.Order import Order
 
 from os import path
 import sys
@@ -9,7 +9,7 @@ sys.path.append(path.join(path.dirname(__file__), '..'))
 model = Order()
 
 
-class OrderListController(Resource):
+class OrderListController_v1(Resource):
     def get(self, customer_id):
         order_id = request.args.get('order_id')
 
@@ -52,7 +52,7 @@ class OrderListController(Resource):
             return {"message": "Failed to add order"}, 400
 
 
-class OrderController(Resource):
+class OrderController_v1(Resource):
     def get(self, customer_id, order_id):
         order = model.find_order_by_id(order_id)
 

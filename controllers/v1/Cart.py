@@ -1,4 +1,4 @@
-from model.Cart import Cart
+from models.v1.Cart import Cart
 
 from os import path
 import sys
@@ -11,7 +11,7 @@ sys.path.append(path.join(path.dirname(__file__), '..'))
 model = Cart()
 
 
-class CartController(Resource):
+class CartController_v1(Resource):
     def get(self, customer_id):
         cart = model.find_cart_by_customer_id(customer_id)
         if cart is None:
@@ -37,7 +37,7 @@ class CartController(Resource):
             return cart, 200
 
 
-class ItemController(Resource):
+class ItemController_v1(Resource):
     def put(self, customer_id, item_id):
         data = request.get_json()
         item = model.edit_item_from_cart(customer_id, item_id, data)

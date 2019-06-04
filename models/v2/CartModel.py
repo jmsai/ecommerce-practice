@@ -1,6 +1,6 @@
-from helpers.FilterHelper import filter_result
-from helpers.FilterHelper import remove_data
-from helpers.GenerateHelper import generate_id
+from helpers.v2.FilterHelper import filter_result
+from helpers.v2.FilterHelper import remove_data
+from helpers.v2.GenerateHelper import generate_id
 
 import json
 from os import path

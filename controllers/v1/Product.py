@@ -1,4 +1,4 @@
-from model.Product import Product
+from models.v1.Product import Product
 
 from os import path
 import sys
@@ -9,7 +9,7 @@ sys.path.append(path.join(path.dirname(__file__), '..'))
 model = Product()
 
 
-class ProductListController(Resource):
+class ProductListController_v1(Resource):
     def get(self):
         product_name = request.args.get('name')
         if product_name is None:
@@ -24,7 +24,7 @@ class ProductListController(Resource):
                 return product, 200
 
 
-class ProductController(Resource):
+class ProductController_v1(Resource):
     def get(self, product_id):
         product = model.find_product_by_id(product_id)
         if product is None:

@@ -1,5 +1,5 @@
-from helpers.JSONHelper import get_json
-from models.OrderModel import OrderModel
+from helpers.v2.JSONHelper import get_json
+from models.v2.OrderModel import OrderModel
 
 from os import path
 import sys
@@ -10,7 +10,7 @@ sys.path.append(path.join(path.dirname(__file__), '..'))
 Order = OrderModel()
 
 
-class OrderListController(Resource):
+class OrderListController_v2(Resource):
     def get(self, customer_id):
         order_id = request.args.get('order_id')
         if order_id is None:

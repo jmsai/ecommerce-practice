@@ -1,5 +1,5 @@
-from helpers.FilterHelper import filter_result
-from helpers.GenerateHelper import generate_id
+from helpers.v2.FilterHelper import filter_result
+from helpers.v2.GenerateHelper import generate_id
 
 import bcrypt
 import json

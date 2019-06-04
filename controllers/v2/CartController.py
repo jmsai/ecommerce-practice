@@ -1,4 +1,4 @@
-from models.CartModel import CartModel
+from models.v2.CartModel import CartModel
 
 from os import path
 import sys
@@ -11,7 +11,7 @@ sys.path.append(path.join(path.dirname(__file__), '..'))
 Cart = CartModel()
 
 
-class CartController(Resource):
+class CartController_v2(Resource):
     def get(self, customer_id):
         cart = Cart.find_by_customer(customer_id)
         if cart is None:

@@ -1,5 +1,5 @@
-from helpers.JSONHelper import get_json
-from models.ProductModel import ProductModel
+from helpers.v2.JSONHelper import get_json
+from models.v2.ProductModel import ProductModel
 
 from os import path
 import sys
@@ -10,7 +10,7 @@ sys.path.append(path.join(path.dirname(__file__), '..'))
 Product = ProductModel()
 
 
-class ProductListController(Resource):
+class ProductListController_v2(Resource):
     def get(self):
         product_name = request.args.get('name')
         if product_name is None:

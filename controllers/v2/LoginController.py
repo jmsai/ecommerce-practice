@@ -1,5 +1,5 @@
-from helpers.JSONHelper import get_json
-from models.CustomerModel import CustomerModel
+from helpers.v2.JSONHelper import get_json 
+from models.v2.CustomerModel import CustomerModel
 
 from os import path
 import sys
@@ -10,7 +10,7 @@ sys.path.append(path.join(path.dirname(__file__), '..'))
 Customer = CustomerModel()
 
 
-class LoginController(Resource):
+class LoginController_v2(Resource):
     def post(self):
         data = request.get_json()
         customer = Customer.find_by_email(data['email'])

@@ -1,5 +1,5 @@
-from helpers.JSONHelper import get_json
-from models.CartModel import CartModel
+from helpers.v2.JSONHelper import get_json
+from models.v2.CartModel import CartModel
 
 from os import path
 import sys
@@ -12,7 +12,7 @@ sys.path.append(path.join(path.dirname(__file__), '..'))
 Cart = CartModel()
 
 
-class ItemController(Resource):
+class ItemController_v2(Resource):
     def put(self, customer_id, item_id):
         data = request.get_json()
         items = Cart.find_all_items(customer_id)
