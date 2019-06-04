@@ -11,8 +11,8 @@ sys.path.append(path.join(path.dirname(__file__), '..'))
 app = Flask(__name__)
 api = Api(app)
 
-Routes_v1.routes(api)
-Routes_v2.routes(api)
+Routes_v1.get_from(api)
+Routes_v2.get_from(api)
 
 
 # Error Page Route

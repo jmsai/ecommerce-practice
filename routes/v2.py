@@ -22,7 +22,7 @@ ORDERS_ROUTE = f'{CUSTOMERS_ROUTE}/orders'
 REVIEWS_ROUTE = f'{PRODUCTS_ROUTE}/<product_id>/reviews'
 
 
-def routes(api):
+def get_from(api):
     # Customer Routes
     api.add_resource(SignupController_v2, f'{API_VERSION}/signup')
     api.add_resource(LoginController_v2, f'{API_VERSION}/login')
