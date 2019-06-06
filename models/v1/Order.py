@@ -13,7 +13,6 @@ orders = []
 class Order:
     __discount_total = 0
     __payment_total = 0
-    __tax_amount = 0
 
     def __init__(self, delivery_date='', shipping_address='',
                  billing_address='', payment_method='',
