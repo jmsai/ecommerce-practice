@@ -19,6 +19,14 @@ class CartController_v1(Resource):
             return {"message": "Customer not found"}, 404
         return get_json(cart), 200
 
+    def post(self, customer_id):
+        new_cart = Cart(customer_id, []).__dict__
+        cart = model.find_by_customer(customer_id)
+        if cart is None:
+            model.add(new_cart)
+            return get_json(new_cart), 201
+        return {"message": "Cart already exists for user"}, 400
+
     def put(self, customer_id):
         data = request.get_json()
         cart = model.add_item(customer_id, data)
