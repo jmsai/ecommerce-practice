@@ -1,4 +1,5 @@
 import uuid
+import json
 
 
 def filter_result(data_key, to_find, table):
@@ -15,3 +16,8 @@ def generate_id():
 
 def generate_tracking_number():
     return str(uuid.uuid4().fields[-1])[:12]
+
+
+def get_json(data):
+    response = json.dumps(data)
+    return json.loads(response)

@@ -1,4 +1,5 @@
-from helpers.v1.Helper import filter_result, generate_id
+from helpers.Helper import generate_id
+from helpers.Helper import filter_result
 
 import bcrypt
 import json
@@ -25,30 +26,29 @@ class Customer:
         self.billing_address = billing_address
         self.shipping_address = shipping_address
 
-    def hash_password(self, password):
-        return bcrypt.hashpw(password.encode(), bcrypt.gensalt(8))
+    def hash(self, _password):
+        return bcrypt.hashpw(_password.encode(), bcrypt.gensalt(8))
 
-    def is_password_valid(self, input_password, password):
-        hashed = self.hash_password(input_password)
+    def is_password_valid(self, _password, password):
+        hashed = self.hash(_password)
         if bcrypt.checkpw(password.encode(), hashed):
             return True
-        else:
-            return False
+        return False
 
-    def find_all_users(self):
+    def find_all(self):
             return customers
 
-    def find_user_by_id(self, customer_id):
-        customers = self.find_all_users()
-        customer = filter_result('customer_id', customer_id, customers)
+    def find_by(self, _id):
+        customers = self.find_all()
+        customer = filter_result('customer_id', _id, customers)
         return next(customer, None)
 
-    def find_user_by_email(self, customer_email):
-        customers = self.find_all_users()
-        customer = filter_result('email', customer_email, customers)
+    def find_by_email(self, _email):
+        customers = self.find_all()
+        customer = filter_result('email', _email, customers)
         return next(customer, None)
 
-    def create_customer(self, new_customer):
+    def add(self, new_customer):
         customers.append(new_customer)
 
     def get_full_name(self):

@@ -1,5 +1,6 @@
-from helpers.v2.JSONHelper import get_json
+from helpers.Helper import get_json
 from models.v2.ProductModel import ProductModel
+from controllers.v1.Product import ProductListController_v1
 
 from os import path
 import sys
@@ -13,12 +14,10 @@ Product = ProductModel()
 class ProductListController_v2(Resource):
     def get(self):
         product_name = request.args.get('name')
+        products = Product.find_all()
         if product_name is None:
-            products = Product.find_all()
             return get_json(products), 200
-        else:
-            product = Product.find_by_name(product_name)
-            if product is None:
-                return {"message": "No results found"}, 404
-            else:
-                return get_json(product), 200
+        product = Product.find_by_name(products, product_name)
+        if product is None:
+            return {"message": "No results found"}, 404
+        return get_json(product), 200

@@ -14,21 +14,21 @@ import sys
 sys.path.append(path.join(path.dirname(__file__), '..'))
 
 API_VERSION = '/api/v1'
-CUSTOMERS_ROUTE = f'{API_VERSION}/customers/<customer_id>'
+CUSTOMERS_ROUTE = f'{API_VERSION}/customers'
 PRODUCTS_ROUTE = f'{API_VERSION}/products'
-CARTS_ROUTE = f'{CUSTOMERS_ROUTE}/cart/items'
-ORDERS_ROUTE = f'{CUSTOMERS_ROUTE}/orders'
+CARTS_ROUTE = f'{CUSTOMERS_ROUTE}/<customer_id>/items'
+ORDERS_ROUTE = f'{CUSTOMERS_ROUTE}/<customer_id>/orders'
 
 
 def get_from(api):
     # Customer Routes
     api.add_resource(SignupController_v1, f'{API_VERSION}/signup')
     api.add_resource(LoginController_v1, f'{API_VERSION}/login')
-    api.add_resource(CustomerController_v1, f'{CUSTOMERS_ROUTE}')
+    api.add_resource(CustomerController_v1, f'{CUSTOMERS_ROUTE}/<_id>')
 
     # Product Routes
-    api.add_resource(ProductListController_v1, f'{PRODUCTS_ROUTE}/')
-    api.add_resource(ProductController_v1, f'{PRODUCTS_ROUTE}/<product_id>')
+    api.add_resource(ProductListController_v1, f'{API_VERSION}/')
+    api.add_resource(ProductController_v1, f'{PRODUCTS_ROUTE}/<_id>')
 
     # Cart Route
     api.add_resource(CartController_v1, f'{CARTS_ROUTE}')

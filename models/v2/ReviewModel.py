@@ -1,4 +1,4 @@
-from helpers.v2.FilterHelper import filter_result
+from helpers.Helper import filter_result
 
 from os import path
 import sys
