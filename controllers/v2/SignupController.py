@@ -1,4 +1,4 @@
-from controllers.v1.Customer import SignupController_v1
+from controllers.v1.Customer import SignupController as SignupController_v1
 
 from os import path
 import sys

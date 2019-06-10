@@ -1,7 +1,7 @@
-import routes.v1 as Routes_v1
-import routes.v2 as Routes_v2
+from routes.v1 import api_v1
+from routes.v2 import api_v2
 
-from flask import Flask
+from flask import Flask, Blueprint
 from flask_restful import Api
 from os import path
 import sys
@@ -11,16 +11,14 @@ sys.path.append(path.join(path.dirname(__file__), '..'))
 app = Flask(__name__)
 api = Api(app)
 
-Routes_v1.get_from(api)
-Routes_v2.get_from(api)
+app.register_blueprint(api_v1, url_prefix='/api/v1')
+app.register_blueprint(api_v2, url_prefix='/api/v2')
 
 
 # Error Page Route
-@app.errorhandler(404)
-def page_not_found(e):
-    return "Error 404: Page not found!"
+# @app.errorhandler(404)
+# def page_not_found(e):
+#     return "Error 404: Page not found!"
 
 if __name__ == '__main__':
-    app.run()
-
-app.run(port=3000)
+    app.run(port=3000, debug=True)

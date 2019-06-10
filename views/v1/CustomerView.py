@@ -11,5 +11,6 @@ class CustomerView:
     def display_credentials(self, user):
         return {
             "_id": user["customer_id"],
-            "email": user["email"]
+            "email": user["email"],
+            "password": user["password"]
         }

@@ -29,7 +29,7 @@ class Customer:
 
     def is_password_valid(self, _password, password):
         hashed = self.hash(_password)
-        
+
         if bcrypt.checkpw(password.encode(), hashed):
             return True
 

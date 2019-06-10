@@ -1,7 +1,6 @@
 from models.v2.CartModel import CartModel
-from helpers.Helper import get_json
 from views.v2.CartView import CartView
-from views.ErrorView import ErrorView
+from views.v2.ErrorView import ErrorView
 
 from os import path
 import sys
@@ -24,6 +23,8 @@ class ItemController(Resource):
         if item is None:
             return Error.item_not_found(), 404
 
+        sub_total = Cart.get_sub_total(cart)
+        print(sub_total)
         return CartView.display_cart(cart), 200
 
     def delete(self, cart_id, customer_id, item_id):

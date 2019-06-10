@@ -1,6 +1,6 @@
 from models.v1.Customer import Customer
 from views.v1.CustomerView import CustomerView
-from views.ErrorView import ErrorView
+from views.v1.ErrorView import ErrorView
 
 from os import path
 import sys
@@ -26,13 +26,13 @@ class CustomerController(Resource):
         return view.display(customer), 200
 
 
-class SignupController_v1(Resource):
+class SignupController(Resource):
     def post(self):
         data = request.get_json()
-        customer = model.find_by_email(data.get('email'))
+        customer = model.find_by_email(data["email"])
 
         if customer is not None:
-            return Error.user_already_exist, 400
+            return Error.user_already_exist(), 400
 
         new_customer = Customer(
                                 data["email"],
@@ -53,7 +53,7 @@ class LoginController(Resource):
         customer = model.find_by_email(data.get('email'))
 
         if customer is None:
-            return Error.user_not_found, 404
+            return Error.user_not_found(), 404
 
         input_password = data["password"]
         password = customer['password']
