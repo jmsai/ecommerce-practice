@@ -2,7 +2,7 @@ from helpers.Helper import get_json
 from models.v2.CartModel import CartModel
 from controllers.v1.Cart import CartController as CartController_v1
 from views.v2.CartView import CartView
-from views.ErrorView import ErrorView
+from views.v2.ErrorView import ErrorView
 
 from os import path
 import sys
@@ -16,7 +16,7 @@ CartView = CartView()
 Error = ErrorView()
 
 
-class CartController(CartController_v1): 
+class CartController(CartController_v1):
     def post(self, customer_id):
         new_cart = CartModel(customer_id, []).__dict__
         cart = Cart.find_by_customer(customer_id)
@@ -26,4 +26,4 @@ class CartController(CartController_v1):
 
         Cart.add(new_cart)
 
-        return CartView.display_cart(cart), 201
+        return new_cart, 201

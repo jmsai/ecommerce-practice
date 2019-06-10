@@ -10,11 +10,11 @@ carts = []
 
 
 class Cart:
-    __payment_total = 0
-
     def __init__(self, customer_id='', items=''):
         self.customer_id = customer_id
         self.items = items
+        self.tax_rate = 0.04
+        self.shipping_fee = 50.00
 
     def add(self, new_cart):
         carts.append(new_cart)
@@ -27,12 +27,14 @@ class Cart:
         customer = filter_result('customer_id', customer_id, carts)
         return next(customer, None)
 
-    def add_item(self, customer_id, data):
-        cart = self.find_by_customer(customer_id)
+    def add_item(self, cart, data):
         items = cart['items']
         for item in items:
             if item['item_id'] == data['item_id']:
                 item['quantity'] += data['quantity']
+                if item['quantity'] == 1:
+                    item['sub_total'] = item['price']
+                item['sub_total'] = item['price'] * item['quantity']
                 return cart
         items.append(data)
         return cart
@@ -40,9 +42,13 @@ class Cart:
     def edit_item(self, cart, item_id, data):
         items = cart['items']
         item = next(filter_result('item_id', item_id, items), None)
+
         if item is None:
             return item
+
         item['quantity'] += data['quantity']
+        item["number_of_items"] = self.count_all_items(cart)
+
         return cart
 
     def remove_item(self, cart, item_id):
@@ -53,9 +59,9 @@ class Cart:
         items.remove(item)
         return cart
 
-    def count_all_items(self, order):
+    def count_all_items(self, cart):
         count = 0
-        items = order["items"]
+        items = cart["items"]
         for item in items:
             count += item["quantity"]
         return count
@@ -64,20 +70,12 @@ class Cart:
         sub_total = 0
         items = cart["items"]
         for item in items:
-            sub_total += (item["price"] * item["quantity"])
+            sub_total += item["sub_total"]
         return sub_total
 
     def get_tax_amount(self, cart):
         return cart["sub_total"] * cart["tax_rate"]
 
     def get_total(self, cart):
-        sub_total = cart["sub_total"]
-        return sub_total + cart["shipping_fee"] + cart["tax_amount"]
-
-    def get_feed(self, carts):
-        for cart in carts:
-            cart["sub_total"] = self.get_sub_total(cart)
-            cart["tax_amount"] = self.get_tax_amount(cart)
-            cart["number_of_items"] = self.count_all_items(cart)
-            cart["total"] = self.get_total(cart)
-        return carts
+        total = cart["sub_total"] + cart["shipping_fee"] + cart["tax_amount"]
+        return total

@@ -1,7 +1,6 @@
-from helpers.Helper import get_json
 from models.v1.Cart import Cart
 from views.v1.CartView import CartView
-from views.ErrorView import ErrorView
+from views.v1.ErrorView import ErrorView
 
 from os import path
 import sys
@@ -23,7 +22,7 @@ class CartController(Resource):
         if cart is None:
             return Error.customer_not_found(), 404
 
-        return view.display_cart_items(cart), 200
+        return view.display_cart(cart), 200
 
     def post(self, customer_id):
         new_cart = Cart(customer_id, []).__dict__
@@ -31,18 +30,26 @@ class CartController(Resource):
 
         if cart is None:
             model.add(new_cart)
-            return view.display_cart_items(new_cart), 201
+            new_cart["sub_total"] = model.get_sub_total(new_cart)
+            new_cart["number_of_items"] = model.count_all_items(new_cart)
+            return new_cart, 201
 
         return Error.cart_already_exist(), 400
 
     def put(self, customer_id):
         data = request.get_json()
-        cart = model.add_item(customer_id, data)
+        cart = model.find_by_customer(customer_id)
+        item = model.add_item(cart, data)
 
-        if cart is None:
+        if item is None:
             return Error.failed_to_perform_action(), 422
 
-        return view.display_cart_items(cart), 200
+        cart["sub_total"] = model.get_sub_total(cart)
+        cart["number_of_items"] = model.count_all_items(cart)
+        cart["tax_amount"] = model.get_tax_amount(cart)
+        cart["total"] = model.get_total(cart)
+
+        return view.display_cart(cart), 200
 
 
 class ItemController(Resource):
@@ -54,7 +61,12 @@ class ItemController(Resource):
         if item is None:
             return Error.failed_to_perform_action(), 422
 
-        return view.display_cart_items(cart), 200
+        cart["sub_total"] = model.get_sub_total(cart)
+        cart["number_of_items"] = model.count_all_items(cart)
+        cart["tax_amount"] = model.get_tax_amount(cart)
+        cart["total"] = model.get_total(cart)
+
+        return view.display_cart(cart), 200
 
     def delete(self, customer_id, item_id):
         cart = model.find_by_customer(customer_id)
@@ -63,4 +75,9 @@ class ItemController(Resource):
         if item is None:
             return Error.failed_to_perform_action(), 422
 
-        return view.display_cart_items(cart), 200
+        cart["sub_total"] = model.get_sub_total(cart)
+        cart["number_of_items"] = model.count_all_items(cart)
+        cart["tax_amount"] = model.get_tax_amount(cart)
+        cart["total"] = model.get_total(cart)
+        
+        return view.display_cart(cart), 200
