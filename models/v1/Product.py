@@ -21,3 +21,16 @@ class Product:
         product_name = _name.replace('_', ' ')
         product = filter_result('name', product_name, products)
         return next(product, None)
+
+    def get_price(self, discount_rate, original_price):
+        rate = discount_rate / 100
+        discount_price = original_price * rate
+        return original_price - discount_price
+
+    def get_feed(self, products):
+        for product in products:
+            original_price = product["original_price"]
+            discount_rate = product["discount_rate"]
+            product["price"] = self.get_price(discount_rate, original_price)
+
+        return products

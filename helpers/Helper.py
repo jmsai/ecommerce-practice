@@ -21,3 +21,7 @@ def generate_tracking_number():
 def get_json(data):
     response = json.dumps(data)
     return json.loads(response)
+
+
+def get_money_value(number):
+    return '{0:.2f}'.format(number)

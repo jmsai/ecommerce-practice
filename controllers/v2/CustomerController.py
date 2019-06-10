@@ -1,4 +1,4 @@
-from controllers.v1.Customer import CustomerController_v1
+from controllers.v1.Customer import CustomerController
 
 from os import path
 import sys
@@ -8,5 +8,5 @@ from flask_restful import Resource
 sys.path.append(path.join(path.dirname(__file__), '..'))
 
 
-class CustomerController_v2(CustomerController_v1):
+class CustomerDetailsController(CustomerController):
     pass

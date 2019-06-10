@@ -11,22 +11,24 @@ orders = []
 
 
 class Order:
-    __discount_total = 0
-    __payment_total = 0
-
-    def __init__(self, delivery_date='', shipping_address='',
-                 billing_address='', payment_method='',
-                 shipping_fee='', items='', customer_id=''):
+    def __init__(self, customer_name='', phone_number='', shipping_address='',
+                 billing_address='', delivery_date='', payment_method='',
+                 payment_date='', shipping_fee='', tax_rate='',
+                 items='', customer_id=''):
         self.order_id = generate_id()
-        self.tracking_id = generate_tracking_number()
         self.transaction_date = f'{Date.datetime.now()}'
-        self.payment_status = "Pending"
-        self.delivery_status = "Pending"
-        self.delivery_date = delivery_date
+        self.customer_name = customer_name
+        self.phone_number = phone_number
         self.shipping_address = shipping_address
         self.billing_address = billing_address
+        self.tracking_id = generate_tracking_number()
+        self.delivery_status = "Pending"
+        self.delivery_date = delivery_date
+        self.payment_date = payment_date
+        self.payment_status = "Pending"
         self.payment_method = payment_method
         self.shipping_fee = shipping_fee
+        self.tax_rate = tax_rate
         self.items = items
         self.customer_id = customer_id
 
@@ -53,10 +55,45 @@ class Order:
 
     def edit(self, customer_id, order_id, data):
         orders = self.find_by_customer(customer_id)
+
         if not orders:
             return orders
+
         order = next(filter_result('order_id', order_id, orders), None)
+
         if order is None:
             return order
+
         order.update(data)
+
         return order
+
+    def count_all_items(self, order):
+        count = 0
+        items = order["items"]
+        for item in items:
+            count += item["quantity"]
+        return count
+
+    def get_sub_total(self, order):
+        sub_total = 0
+        items = order["items"]
+        for item in items:
+            sub_total += (item["price"] * item["quantity"])
+        return sub_total
+
+    def get_tax_amount(self, order):
+        return order["sub_total"] * order["tax_rate"]
+
+    def get_total(self, order):
+        sub_total = order["sub_total"]
+        return sub_total + order["shipping_fee"] + order["tax_amount"]
+
+    def get_feed(self, orders):
+        for order in orders:
+            order["sub_total"] = self.get_sub_total(order)
+            order["tax_amount"] = self.get_tax_amount(order)
+            order["number_of_items"] = self.count_all_items(order)
+            order["total"] = self.get_total(order)
+
+        return orders

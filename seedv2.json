@@ -10,7 +10,9 @@
             "currency": "PHP",
             "original_price": 200.00,
             "discount_rate": 0.1,
-            "discount_price": 180.00
+            "discount_price": 180.00,
+            "reviews_count": 60,
+            "rating": 4.5
         },
         {
             "product_id": "28765432",
@@ -22,7 +24,9 @@
             "currency": "PHP",    
             "original_price": 200.00,
             "discount_rate": 0.1,
-            "discount_price": 180.00
+            "discount_price": 180.00,
+            "reviews_count": 60,
+            "rating": 4.5
         },
         {
             "product_id": "38765432",
@@ -34,7 +38,9 @@
             "currency": "PHP",
             "original_price": 200.00,
             "discount_rate": 0.1,
-            "discount_price": 180.00
+            "discount_price": 180.00,
+            "reviews_count": 60,
+            "rating": 4.5
         },
         {
             "product_id": "48765432",
@@ -46,7 +52,9 @@
             "currency": "PHP",
             "original_price": 200.00,
             "discount_rate": 0.1,
-            "discount_price": 180.00
+            "discount_price": 180.00,
+            "reviews_count": 0,
+            "rating": 0
         },
         {
             "product_id": "58765432",
@@ -58,7 +66,9 @@
             "currency": "PHP",    
             "original_price": 200.00,
             "discount_rate": 0.1,
-            "discount_price": 180.00
+            "discount_price": 180.00,
+            "reviews_count": 5,
+            "rating": 5.0
         },
         {
             "product_id": "68765432",
@@ -69,7 +79,9 @@
             "currency": "PHP",
             "original_price": 200.00,
             "discount_rate": 0.1,
-            "discount_price": 180.00
+            "discount_price": 180.00,
+            "reviews_count": 10,
+            "rating": 4.0
         },
         {
             "product_id": "78765432",
@@ -81,7 +93,9 @@
             "currency": "PHP",
             "original_price": 200.00,
             "discount_rate": 0.1,
-            "discount_price": 180.00
+            "discount_price": 180.00,
+            "reviews_count": 5,
+            "rating": 5.0
         },
         {
             "product_id": "88765432",
@@ -93,7 +107,9 @@
             "currency": "PHP",    
             "original_price": 200.00,
             "discount_rate": 0.1,
-            "discount_price": 180.00
+            "discount_price": 180.00,
+            "reviews_count": 10,
+            "rating": 3.5
         },
         {
             "product_id": "98765432",
@@ -105,45 +121,9 @@
             "currency": "PHP",
             "original_price": 200.00,
             "discount_rate": 0.1,
-            "discount_price": 180.00
+            "discount_price": 180.00,
+            "reviews_count": 1,
+            "rating": 2.5
         }               
-    ],
-    "reviews": [
-        {
-            "product_id": "98765432",
-            "author": "Anonymous",
-            "comment": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum quam eros, tincidunt id dolor a, feugiat blandit libero. Vivamus mattis quam mollis lacus consectetur, ac facilisis erat sollicitudin. ",
-            "rating": 4.5
-        },
-        {
-            "product_id": "78765432",
-            "author": "Billy P.",
-            "comment": "Cras vel dui vel diam imperdiet pellentesque interdum eget nisi. Sed interdum pharetra lobortis. Donec et lacus sit amet tortor viverra hendrerit.",
-            "rating": 5.0
-        },
-        {
-            "product_id": "68765432",
-            "author": "Anonymous",
-            "comment": "Nulla mollis neque et ornare porta.",
-            "rating": 3.5
-        },
-        {
-            "product_id": "98765432",
-            "author": "Anonymous",
-            "comment": "Nullam eget nisl viverra, elementum odio at, commodo felis. ",
-            "rating": 2.0
-        },
-        {
-            "product_id": "48765432",
-            "author": "Roberta J.",
-            "comment": "Nullam eget nisl viverra, elementum odio at, commodo felis. ",
-            "rating": 3.0
-        },
-        {
-            "product_id": "48765432",
-            "author": "Alexa G.",
-            "comment": "Nullam eget nisl viverra, elementum odio at, commodo felis. ",
-            "rating": 5.0
-        }
     ]
 }

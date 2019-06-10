@@ -12,8 +12,8 @@ customers = []
 
 class Customer:
     def __init__(self, email='', password='', first_name='',
-                 last_name='', middle_name='', phone_number='', gender='',
-                 birth_date='', billing_address='', shipping_address=''):
+                 middle_name='', last_name='', phone_number='',
+                 billing_address='', shipping_address=''):
         self.customer_id = generate_id()
         self.email = email
         self.password = password
@@ -21,8 +21,6 @@ class Customer:
         self.middle_name = middle_name
         self.last_name = last_name
         self.phone_number = phone_number
-        self.gender = gender
-        self.birth_date = birth_date
         self.billing_address = billing_address
         self.shipping_address = shipping_address
 
@@ -31,8 +29,10 @@ class Customer:
 
     def is_password_valid(self, _password, password):
         hashed = self.hash(_password)
+        
         if bcrypt.checkpw(password.encode(), hashed):
             return True
+
         return False
 
     def find_all(self):
@@ -51,10 +51,17 @@ class Customer:
     def add(self, new_customer):
         customers.append(new_customer)
 
-    def get_full_name(self):
-        return ("%s %s" % (self.first_name, self.last_name))
+    def get_middle_initial(self, customer):
+        return f'{customer["middle_name"][0]}.'
 
-    def get_address(self, street, city, state, zip_code, country):
+    def get_full_name(self, customer):
+        first_name = customer["first_name"]
+        middle_initial = customer["middle_initial"]
+        last_name = customer["last_name"]
+        return f'{first_name} {middle_initial} {last_name}'
+
+    def get_address(self, street, city,
+                    state, zip_code, country):
         return {
             "street": street,
             "city": city,

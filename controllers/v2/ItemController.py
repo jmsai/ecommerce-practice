@@ -1,5 +1,7 @@
 from models.v2.CartModel import CartModel
 from helpers.Helper import get_json
+from views.v2.CartView import CartView
+from views.ErrorView import ErrorView
 
 from os import path
 import sys
@@ -9,18 +11,26 @@ from flask_restful import Resource
 
 sys.path.append(path.join(path.dirname(__file__), '..'))
 Cart = CartModel()
+CartView = CartView()
+Error = ErrorView()
 
 
-class ItemController_v2(Resource):
+class ItemController(Resource):
     def put(self, cart_id, customer_id, item_id):
         data = request.get_json()
-        item = Cart.edit_item(customer_id, item_id, data)
+        cart = Cart.find_by_customer(customer_id)
+        item = Cart.edit_item(cart, item_id, data)
+
         if item is None:
-            return {"message": "Item is not found"}, 404
-        return get_json(item), 200
+            return Error.item_not_found(), 404
+
+        return CartView.display_cart(cart), 200
 
     def delete(self, cart_id, customer_id, item_id):
-        cart = Cart.remove_item(customer_id, item_id)
-        if cart is None:
-            return {"message": "Item is not found"}, 404
-        return get_json(cart), 200
+        cart = Cart.find_by_customer(customer_id)
+        item = Cart.remove_item(cart, item_id)
+
+        if item is None:
+            return Error.item_not_found(), 404
+
+        return CartView.display_cart(cart), 200

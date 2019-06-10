@@ -8,5 +8,5 @@ from flask_restful import Resource
 sys.path.append(path.join(path.dirname(__file__), '..'))
 
 
-class SignupController_v2(SignupController_v1):
+class SignupController(SignupController_v1):
     pass
