@@ -1,12 +1,12 @@
-from routes.v1 import api_v1
-from routes.v2 import api_v2
+from api.v1.routes import api_v1
+from api.v2.routes import api_v2
 
 from flask import Flask, Blueprint
 from flask_restful import Api
-from os import path
-import sys
+# from os import path
+# import sys
 
-sys.path.append(path.join(path.dirname(__file__), '..'))
+# sys.path.append(path.join(path.dirname(__file__), '..'))
 
 app = Flask(__name__)
 api = Api(app)
