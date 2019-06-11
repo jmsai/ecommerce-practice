@@ -1,6 +1,6 @@
 from api.v1.common import Common
 
-import datetime as Date
+from datetime import datetime as Date
 
 orders = []
 Common = Common()
@@ -12,7 +12,7 @@ class Order:
                  payment_date='', shipping_fee='', tax_rate='',
                  items='', customer_id=''):
         self.order_id = Common.generate_id()
-        self.transaction_date = f'{Date.datetime.now()}'
+        self.transaction_date = Common.set_date(Date.today())
         self.customer_name = customer_name
         self.phone_number = phone_number
         self.shipping_address = shipping_address
@@ -51,9 +51,6 @@ class Order:
 
     def edit(self, customer_id, order_id, data):
         orders = self.find_by_customer(customer_id)
-
-        if not orders:
-            return orders
 
         order = next(Common.filter_result('order_id', order_id, orders), None)
 

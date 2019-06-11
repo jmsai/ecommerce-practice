@@ -1,4 +1,5 @@
 import uuid
+from datetime import datetime as Date
 
 
 class Common:
@@ -24,3 +25,15 @@ class Common:
     def get_tax(self, rate):
         percentage = self.get_whole_number(rate)
         return "{}%".format(percentage)
+
+    def set_date(self, date):
+        return date.strftime("%a %d %b %Y")
+
+    def get_date(self, str):
+        date_object = Date.strptime(str, "%Y-%m-%d %H:%M:%S.%f")
+        return self.set_date(date_object)
+
+# date_object = Date.strptime("2019-05-24 08:58:39.854555", )
+# print(date_object)
+# str_object = date_object.strftime("%a %d %b %Y")
+# print(str_object)

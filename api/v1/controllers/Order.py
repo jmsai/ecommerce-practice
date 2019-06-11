@@ -20,17 +20,15 @@ class OrderController(Resource):
         return view.display_list(orders), 200
 
     def post(self, customer_id):
-        try:
             data = request.get_json()
-
             new_order = Order(
                                 data["customer_name"],
                                 data["phone_number"],
                                 data["shipping_address"],
                                 data["billing_address"],
                                 data["delivery_date"],
-                                data["payment_date"],
                                 data["payment_method"],
+                                data["payment_date"],
                                 data["shipping_fee"],
                                 data["tax_rate"],
                                 data["items"],
@@ -46,9 +44,6 @@ class OrderController(Resource):
 
             return view.display_details(new_order), 201
 
-        except:
-            return Error.failed_to_perform_action(), 422
-
 
 class OrderDetailsController(Resource):
     def get(self, customer_id, order_id):
@@ -60,14 +55,10 @@ class OrderDetailsController(Resource):
         return view.display_details(order), 200
 
     def put(self, customer_id, order_id):
-        try:
             data = request.get_json()
             order = model.edit(customer_id, order_id, data)
 
-            if not order:
-                return Error.no_results_found, 404
+            if order is None:
+                return Error.failed_to_perform_action(), 422
 
-            return view.display_details(order), 200
-
-        except:
-            return Error.failed_to_perform_action(), 422
+            return order, 200

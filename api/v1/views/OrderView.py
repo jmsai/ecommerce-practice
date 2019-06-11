@@ -9,13 +9,15 @@ class OrderView:
 
         for order in orders:
             total = Common.get_currency(order["total"])
+            payment_date = Common.get_date(order["payment_date"])
+            delivery_date = Common.get_date(order["delivery_date"])
 
             data = {
                     "order_id": order["order_id"],
                     "transaction_date": order["transaction_date"],
                     "delivery_status": order["delivery_status"],
-                    "delivery_date": order["delivery_date"],
-                    "payment_date": order["payment_date"],
+                    "delivery_date": delivery_date,
+                    "payment_date": payment_date,
                     "payment_status": order["payment_status"],
                     "total": total
                 }
@@ -30,12 +32,14 @@ class OrderView:
         total = Common.get_currency(order["total"])
         sub_total = Common.get_currency(order["sub_total"])
         shipping_fee = Common.get_currency(order["shipping_fee"])
+        payment_date = Common.get_date(order["payment_date"])
+        delivery_date = Common.get_date(order["delivery_date"])
 
         return {
             "orders": {
                 "order_id": order["order_id"],
                 "transaction_date": order["transaction_date"],
-                "payment_date": order["payment_date"],
+                "payment_date": payment_date,
                 "payment_method": order["payment_method"],
                 "payment_status": order["payment_status"],
                 "items": order["items"]
@@ -43,7 +47,7 @@ class OrderView:
             "delivery_info": {
                 "tracking_id": order["tracking_id"],
                 "delivery_status": order["delivery_status"],
-                "delivery_date": order["delivery_date"],
+                "delivery_date": delivery_date,
             },
             "customer_info": {
                 "customer_name": order["customer_name"],
