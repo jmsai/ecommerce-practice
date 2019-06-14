@@ -10,10 +10,6 @@ from api.v1.controllers.Order import OrderDetailsController
 
 from flask import Blueprint
 from flask_restful import Api
-from os import path
-import sys
-
-sys.path.append(path.join(path.dirname(__file__), '..'))
 
 api_v1 = Blueprint('api_v1', __name__)
 api = Api(api_v1)

@@ -1,9 +1,9 @@
 from api.v1.routes import api_v1
 from api.v2.routes import api_v2
-from api.v1.error import handle_page_not_found
-from api.v1.error import handle_unauthorized_error
-from api.v1.error import handle_access_denied_error
-from api.v1.error import handle_internal_server_error
+from error.handler import handle_page_not_found
+from error.handler import handle_unauthorized_error
+from error.handler import handle_access_denied_error
+from error.handler import handle_internal_server_error
 
 from flask import Flask, Blueprint
 from flask_restful import Api

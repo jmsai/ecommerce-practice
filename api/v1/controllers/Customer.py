@@ -1,10 +1,11 @@
+from api.v1.common import get_response
 from api.v1.models.Customer import Customer
 from api.v1.views.CustomerView import CustomerView
-from api.v1.models.Error import NotFoundError
-from api.v1.models.Error import BadRequestError
-from api.v1.models.Error import UnprocessableEntityError
-from api.v1.models.Error import ResourceAlreadyExistError
-from api.v1.views.ErrorView import ErrorView
+from error.model import NotFoundError
+from error.model import BadRequestError
+from error.model import UnprocessableEntityError
+from error.model import ResourceAlreadyExistError
+from error.view import ErrorView
 
 from flask import request
 from flask_restful import Resource
@@ -16,70 +17,64 @@ ErrorView = ErrorView()
 
 class CustomerController(Resource):
     def get(self, _id):
-        try:
             customer = model.find_by(_id)
+
+            if customer is None:
+                display = ErrorView.display(NotFoundError("Customer"))
+                return get_response(display, 404)
+
             customer["middle_initial"] = model.get_middle_initial(customer)
             customer["full_name"] = model.get_full_name(customer)
 
-        except:
-            error = NotFoundError("Customer")
-            return ErrorView.display(error), 404
-
-        else:
-            return view.display(customer), 200
+            display = view.display(customer)
+            return get_response(display, 200)
 
 
 class SignupController(Resource):
     def post(self):
-        try:
-            data = request.get_json()
-            customer = model.find_by_email(data["email"])
+        data = request.get_json()
 
-            if customer is not None:
-                error = ResourceAlreadyExistError("User")
-                return ErrorView.display(error), 409
+        customer = model.find_by_email(data["email"])
 
-        except:
-            error = UnprocessableEntityError()
-            return ErrorView.display(error), 422
+        if customer is not None:
+            error = ResourceAlreadyExistError("User")
+            display = ErrorView.display(error)
+            return get_response(display, 409)
 
-        else:
-            new_customer = Customer(
-                                    data["email"],
-                                    data["password"],
-                                    data["first_name"],
-                                    data["middle_name"],
-                                    data["last_name"]
-                                    ).__dict__
+        new_customer = Customer(
+                                data["email"],
+                                data["password"],
+                                data["first_name"],
+                                data["middle_name"],
+                                data["last_name"]
+                                ).__dict__
 
-            model.add(new_customer)
+        model.add(new_customer)
+        display = view.display_credentials(new_customer)
 
-            return view.display_credentials(new_customer), 201
+        return get_response(display, 201)
 
 
 class LoginController(Resource):
     def post(self):
         data = request.get_json()
-        try:
-            customer = model.find_by_email(data.get('email'))
+        customer = model.find_by_email(data.get('email'))
 
-            if customer is None:
-                error = NotFoundError("Customer")
-                return ErrorView.display(error), 404
+        if customer is None:
+            error = NotFoundError("Customer")
+            display = ErrorView.display(error)
+            return get_response(display, 404)
 
-        except:
-            error = UnprocessableEntityError()
-            return ErrorView.display(error), 422
+        input_password = data["password"]
+        password = customer['password']
 
-        else:
-            input_password = data["password"]
-            password = customer['password']
+        valid_password = model.is_password_valid(input_password, password)
 
-            valid_password = model.is_password_valid(input_password, password)
+        if not valid_password:
+            error = BadRequestError("Login failed",
+                                    "Password does not match")
+            display = ErrorView.display(error)
+            return get_response(display, 400)
 
-            if not valid_password:
-                error = BadRequestError("Login failed",
-                                        "Password does not match")
-                return ErrorView.display(error), 400
-
-            return view.display_credentials(customer), 200
+        display = view.display_credentials(customer)
+        return get_response(display, 200)

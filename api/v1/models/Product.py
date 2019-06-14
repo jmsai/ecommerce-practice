@@ -1,13 +1,17 @@
 from api.v1.common import Common
 
 import json
+from os import path
+import sys
 
 Common = Common()
+
+sys.path.append(path.join(path.dirname(__file__), '..'))
 
 
 class Product:
     def find_all(self):
-        with open("seedv1.json", "r") as seed_file:
+        with open("seed.json", "r") as seed_file:
             data = json.load(seed_file)
             return data["products"]
 

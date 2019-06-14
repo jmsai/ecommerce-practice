@@ -1,5 +1,7 @@
 import uuid
+import json
 from datetime import datetime as Date
+from flask import Response
 
 
 class Common:
@@ -32,3 +34,8 @@ class Common:
     def get_date(self, str):
         date_object = Date.strptime(str, "%Y-%m-%d %H:%M:%S.%f")
         return self.set_date(date_object)
+
+
+def get_response(obj, status):
+    data = json.dumps(obj)
+    return Response(data, status, mimetype='application/json')
