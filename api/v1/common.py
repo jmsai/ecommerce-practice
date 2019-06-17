@@ -15,7 +15,7 @@ class Common:
         return str(uuid.uuid4().fields[-1])[:12]
 
     def get_currency(self, value):
-        return 'Php {0:.2f}'.format(value)
+        return "Php {:,.2f}".format(value)
 
     def get_whole_number(self, number):
         return int(number)

@@ -27,6 +27,8 @@ class Order:
         self.tax_rate = tax_rate
         self.items = items
         self.customer_id = customer_id
+        self.sub_total = 0.00
+        self.number_of_items = 0
 
     def find_all(self):
         return orders
@@ -47,46 +49,48 @@ class Order:
         return next(order, None)
 
     def add(self, new_order):
-        orders.append(new_order)
+        if new_order:
+            orders.append(new_order)
+            return new_order
 
-    def edit(self, customer_id, order_id, data):
-        orders = self.find_by_customer(customer_id)
+        return None
 
-        order = next(Common.filter_result('order_id', order_id, orders), None)
+    def edit(self, orders, order_id, data):
+        if orders is not None or orders:
+            order = self.find_by(order_id)
 
-        if order is None:
+            if order is not None:
+                order.update(data)
+
             return order
 
-        order.update(data)
-
-        return order
+        return None
 
     def count_all_items(self, order):
-        count = 0
-        items = order["items"]
-        for item in items:
-            count += item["quantity"]
-        return count
+        if order is not None:
+            for item in order["items"]:
+                order["number_of_items"] += item["quantity"]
+            return order["number_of_items"]
+
+        return None
 
     def get_sub_total(self, order):
-        sub_total = 0
-        items = order["items"]
-        for item in items:
-            sub_total += (item["price"] * item["quantity"])
-        return sub_total
+        if order is not None:
+            for item in order["items"]:
+                order["sub_total"] += (item["price"] * item["quantity"])
+            return order['sub_total']
+
+        return None
 
     def get_tax_amount(self, order):
-        return order["sub_total"] * order["tax_rate"]
+        if order is not None:
+            return order["sub_total"] * order["tax_rate"]
+
+        return None
 
     def get_total(self, order):
-        sub_total = order["sub_total"]
-        return sub_total + order["shipping_fee"] + order["tax_amount"]
+        if order is not None:
+            sub_total = order["sub_total"]
+            return sub_total + order["shipping_fee"] + order["tax_amount"]
 
-    def get_feed(self, orders):
-        for order in orders:
-            order["sub_total"] = self.get_sub_total(order)
-            order["tax_amount"] = self.get_tax_amount(order)
-            order["number_of_items"] = self.count_all_items(order)
-            order["total"] = self.get_total(order)
-
-        return orders
+        return None

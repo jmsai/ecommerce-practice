@@ -6,12 +6,13 @@ import sys
 
 Common = Common()
 
-sys.path.append(path.join(path.dirname(__file__), '..'))
+sys.path.append(path.join(path.dirname(__file__)))
 
 
 class Product:
     def find_all(self):
-        with open("seed.json", "r") as seed_file:
+        with open("seedv1.json", "r") as seed_file:
+            print(path.dirname(__file__))
             data = json.load(seed_file)
             return data["products"]
 
@@ -28,11 +29,3 @@ class Product:
         rate = discount_rate / 100
         discount_price = original_price * rate
         return original_price - discount_price
-
-    def get_feed(self, products):
-        for product in products:
-            original_price = product["original_price"]
-            discount_rate = product["discount_rate"]
-            product["price"] = self.get_price(discount_rate, original_price)
-
-        return products

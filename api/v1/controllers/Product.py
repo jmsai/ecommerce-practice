@@ -17,54 +17,45 @@ ErrorView = ErrorView()
 
 class ProductController(Resource):
     def get(self):
-            products = model.find_all()
+        products = model.find_all()
 
-            if products is None:
-                error = NotFoundError("Results")
-                display = ErrorView.display(error)
-                return get_response(display, 404)
+        if products:
+            for product in products:
+                original_price = product["original_price"]
+                discount_rate = product["discount_rate"]
+                product["price"] = model.get_price(discount_rate, original_price)
 
-            product_name = request.args.get('name')
-
-            if product_name is None:
-                feed = model.get_feed(products)
-                display = view.display_list(feed)
-                return get_response(display, 200)
-
-            product = model.find_by_name(products, product_name)
-
-            if product is None:
-                error = NotFoundError("Product")
-                display = ErrorView.display(error)
-                return get_response(display, 404)
-
-            original_price = product["original_price"]
-            discount_rate = product["discount_rate"]
-            product["price"] = model.get_price(discount_rate, original_price)
-
-            display = view.display_details(product)
+            display = view.display_list(products)
             return get_response(display, 200)
+
+        if products is None or not products:
+            error = NotFoundError("Results")
+            display = ErrorView.display(error)
+            return get_response(display, 404)
 
 
 class ProductDetailsController(Resource):
     def get(self, _id):
         products = model.find_all()
 
-        if products is None:
+        if products:
+
+            product = model.find_by(products, _id)
+
+            if product:
+                original_price = product["original_price"]
+                rate = product["discount_rate"]
+                product["price"] = model.get_price(rate, original_price)
+
+                display = view.display_details(product)
+                return get_response(display, 200)
+
+            if product is None:
+                error = NotFoundError("Product")
+                display = ErrorView.display(error)
+                return get_response(display, 404)
+
+        if products is None or not products:
             error = NotFoundError("Results")
             display = ErrorView.display(error)
             return get_response(display, 404)
-
-        product = model.find_by(products, _id)
-
-        if product is None:
-            error = NotFoundError("Product")
-            display = ErrorView.display(error)
-            return get_response(display, 404)
-
-        original_price = product["original_price"]
-        discount_rate = product["discount_rate"]
-        product["price"] = model.get_price(discount_rate, original_price)
-
-        display = view.display_details(product)
-        return get_response(display, 200)

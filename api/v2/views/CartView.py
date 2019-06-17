@@ -32,7 +32,7 @@ class CartView:
 
             itemData.append(data)
 
-        number_of_items = Common.get_whole_number(cart["total_quantity"])
+        number_of_items = Common.get_whole_number(cart["number_of_items"])
         tax_rate = Common.get_tax(cart["tax_rate"])
         tax_amount = Common.get_currency("Php", cart["tax_amount"])
         total = Common.get_currency("Php", cart["total"])
