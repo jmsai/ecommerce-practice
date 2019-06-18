@@ -11,6 +11,10 @@ from flask_restful import Api
 app = Flask(__name__)
 api = Api(app)
 
+@app.route('/')
+def display():
+    return "Home"
+
 app.register_blueprint(api_v1, url_prefix='/api/v1')
 app.register_blueprint(api_v2, url_prefix='/api/v2')
 
