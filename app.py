@@ -25,4 +25,4 @@ app.register_error_handler(403, handle_access_denied_error)
 app.register_error_handler(500, handle_internal_server_error)
 
 if __name__ == '__main__':
-    app.run(port=443, debug=True)
+    app.run(debug=True)
