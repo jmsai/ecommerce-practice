@@ -25,3 +25,5 @@ instance/*.db
 
 # pytest files
 .pytest_cache/
+
+.vscode
